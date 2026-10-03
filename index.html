@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>MAMUN · Cyber & Code</title>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts: Space Grotesk (modern/Gen-Z) + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- reset & base ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg-2: #12121a;
+      --card: rgba(22, 22, 32, 0.7);
+      --card-solid: #16161f;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-bright: rgba(0, 255, 200, 0.3);
+      --neon: #00ffc8;
+      --neon-2: #7c3aed;
+      --neon-3: #ff3860;
+      --text: #f0f0f5;
+      --text-mid: #8b8b9e;
+      --text-dim: #5a5a6e;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124, 58, 237, 0.15), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(0, 255, 200, 0.08), transparent),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 1.2rem 1rem 2.5rem;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* subtle grid glow */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(10, 10, 15, 0.6) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ---------- main card ---------- */
+    .portfolio {
+      position: relative;
+      z-index: 1;
+      max-width: 540px;
+      width: 100%;
+      background: var(--card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 1.8rem;
+      padding: 1.8rem 1.3rem 2rem;
+      box-shadow: 
+        0 0 0 1px rgba(255, 255, 255, 0.03),
+        0 30px 60px -20px rgba(0, 0, 0, 0.9),
+        0 0 80px -20px rgba(0, 255, 200, 0.15);
+      animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      overflow: hidden;
+    }
+
+    @keyframes slideUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* top gradient line */
+    .portfolio::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--neon), var(--neon-2), transparent);
+      opacity: 0.8;
+    }
+
+    /* ---------- header ---------- */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.8rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .avatar-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 1.3rem;
+      background: linear-gradient(135deg, var(--neon-2), var(--neon));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--bg);
+      box-shadow: 0 8px 24px -6px rgba(124, 58, 237, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .avatar::after {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border-radius: 1.1rem;
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.9), rgba(0, 255, 200, 0.9));
+      z-index: -1;
+    }
+
+    .avatar i {
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+
+    .status-dot {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--neon);
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 12px var(--neon);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 12px var(--neon); }
+      50% { box-shadow: 0 0 20px var(--neon), 0 0 30px var(--neon); }
+    }
+
+    .header-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+
+    h1 span {
+      background: linear-gradient(90deg, var(--neon), var(--neon-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .role-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--neon);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .role-tag .blink {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--neon);
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    /* ---------- stat chips ---------- */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .stat {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 0.8rem 0.5rem;
+      text-align: center;
+      transition: all 0.25s;
+    }
+
+    .stat:hover {
+      border-color: var(--border-bright);
+      background: rgba(0, 255, 200, 0.05);
+    }
+
+    .stat-value {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .stat-label {
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      margin-top: 0.15rem;
+    }
+
+    /* ---------- section title ---------- */
+    .section-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--text-mid);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .section-title i {
+      color: var(--neon);
+      font-size: 0.9rem;
+    }
+
+    .section-title .line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--border), transparent);
+    }
+
+    /* ---------- skill cards ---------- */
+    .cards {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 1.3rem;
+      padding: 1.1rem 1.1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0;
+      width: 3px; height: 100%;
+      background: linear-gradient(to bottom, var(--neon), var(--neon-2));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .card:hover, .card:active {
+      border-color: var(--border-bright);
+      background: rgba(0, 255, 200, 0.03);
+      transform: translateX(4px);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--bg);
+      box-shadow: 0 6px 16px -4px rgba(0, 0, 0, 0.5);
+    }
+
+    .card:nth-child(1) .card-icon { background: linear-gradient(135deg, #00ffc8, #00b894); }
+    .card:nth-child(2) .card-icon { background: linear-gradient(135deg, #a855f7, #7c3aed); }
+    .card:nth-child(3) .card-icon { background: linear-gradient(135deg, #ff3860, #e11d48); }
+
+    .card-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+      letter-spacing: -0.01em;
+    }
+
+    .card p {
+      font-size: 0.78rem;
+      color: var(--text-mid);
+      line-height: 1.45;
+      margin-bottom: 0.6rem;
+    }
+
+    .badge-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      font-weight: 600;
+      padding: 0.18rem 0.55rem;
+      border-radius: 6px;
+      background: rgba(0, 255, 200, 0.08);
+      color: var(--neon);
+      border: 1px solid rgba(0, 255, 200, 0.2);
+      letter-spacing: 0.02em;
+    }
+
+    .card:nth-child(2) .badge {
+      background: rgba(168, 85, 247, 0.1);
+      color: #c084fc;
+      border-color: rgba(168, 85, 247, 0.25);
+    }
+    .card:nth-child(3) .badge {
+      background: rgba(255, 56, 96, 0.1);
+      color: #ff6b8a;
+      border-color: rgba(255, 56, 96, 0.25);
+    }
+
+    /* ---------- contact section ---------- */
+    .contact-section {
+      margin-bottom: 1.8rem;
+    }
+
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 1.1rem;
+      padding: 0.85rem 1rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-item:hover, .contact-item:active {
+      border-color: var(--border-bright);
+      background: rgba(0, 255, 200, 0.04);
+      transform: translateX(4px);
+    }
+
+    .contact-icon {
+      flex-shrink: 0;
+      width: 38px;
+      height: 38px;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: var(--bg);
+    }
+
+    .contact-icon.phone { background: linear-gradient(135deg, #00ffc8, #00b894); }
+    .contact-icon.gmail { background: linear-gradient(135deg, #ff3860, #e11d48); }
+    .contact-icon.whatsapp { background: linear-gradient(135deg, #25d366, #128c7e); }
+
+    .contact-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .contact-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.1rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .contact-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+      word-break: break-all;
+      line-height: 1.3;
+    }
+
+    .contact-arrow {
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      transition: all 0.25s;
+    }
+
+    .contact-item:hover .contact-arrow {
+      color: var(--neon);
+      transform: translateX(3px);
+    }
+
+    /* ---------- footer ---------- */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1.4rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .social-links a {
+      width: 38px;
+      height: 38px;
+      border-radius: 0.75rem;
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .social-links a:hover, .social-links a:active {
+      border-color: var(--neon);
+      color: var(--neon);
+      background: rgba(0, 255, 200, 0.08);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px -4px rgba(0, 255, 200, 0.3);
+    }
+
+    .credit {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+
+    .credit i {
+      color: var(--neon-3);
+    }
+
+    /* ---------- small screens ---------- */
+    @media (max-width: 380px) {
+      .portfolio { padding: 1.5rem 1rem 1.7rem; border-radius: 1.5rem; }
+      h1 { font-size: 1.7rem; }
+      .avatar { width: 62px; height: 62px; font-size: 1.7rem; border-radius: 1.1rem; }
+      .card { padding: 0.95rem; gap: 0.75rem; }
+      .card-icon { width: 40px; height: 40px; font-size: 1.05rem; border-radius: 0.8rem; }
+      .card h3 { font-size: 0.92rem; }
+      .card p { font-size: 0.72rem; }
+      .contact-value { font-size: 0.74rem; }
+      .stat-value { font-size: 1rem; }
+    }
+
+    /* ---------- larger screens ---------- */
+    @media (min-width: 600px) {
+      body { padding: 2rem 1rem; }
+      .portfolio { padding: 2.2rem 2rem; }
+      h1 { font-size: 2.3rem; }
+      .avatar { width: 80px; height: 80px; font-size: 2.2rem; }
+      .card { padding: 1.3rem 1.4rem; }
+      .card h3 { font-size: 1.08rem; }
+      .card p { font-size: 0.82rem; }
+      .card-icon { width: 48px; height: 48px; font-size: 1.3rem; }
+      .contact-value { font-size: 0.88rem; }
+    }
+
+    /* ---------- reduced motion ---------- */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="portfolio">
+    <!-- HEADER -->
+    <div class="header">
+      <div class="avatar-wrap">
+        <div class="avatar">
+          <i class="fas fa-user-secret"></i>
+        </div>
+        <div class="status-dot"></div>
+      </div>
+      <div class="header-text">
+        <h1>MAMUN<span>.</span></h1>
+        <div class="role-tag">
+          <span class="blink"></span>
+          Cyber Security · Ethical Hacking
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value">15</div>
+        <div class="stat-label">Years</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">IX</div>
+        <div class="stat-label">Class</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">♂</div>
+        <div class="stat-label">Male</div>
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="section-title">
+      <i class="fas fa-terminal"></i> Skills
+      <span class="line"></span>
+    </div>
+
+    <div class="cards">
+      <!-- CYBER SECURITY -->
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-shield-halved"></i></div>
+        <div class="card-content">
+          <h3>Cyber Security</h3>
+          <p>Securing systems, threat analysis & defense.</p>
+          <div class="badge-list">
+            <span class="badge">network</span>
+            <span class="badge">crypto</span>
+            <span class="badge">blue-team</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ETHICAL HACKING -->
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-user-secret"></i></div>
+        <div class="card-content">
+          <h3>Ethical Hacking</h3>
+          <p>Pen-testing, recon & responsible disclosure.</p>
+          <div class="badge-list">
+            <span class="badge">kali</span>
+            <span class="badge">recon</span>
+            <span class="badge">metasploit</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIBE CODER -->
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-code"></i></div>
+        <div class="card-content">
+          <h3>Vibe Coder</h3>
+          <p>Clean code. Good energy. Real projects.</p>
+          <div class="badge-list">
+            <span class="badge">python</span>
+            <span class="badge">javascript</span>
+            <span class="badge">cli</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="section-title">
+      <i class="fas fa-satellite-dish"></i> Contact
+      <span class="line"></span>
+    </div>
+
+    <div class="contact-section">
+      <div class="contact-list">
+        <!-- PHONE -->
+        <a href="tel:9647082552" class="contact-item">
+          <div class="contact-icon phone"><i class="fas fa-phone"></i></div>
+          <div class="contact-info">
+            <div class="contact-label">Phone</div>
+            <div class="contact-value">+91 9647082552</div>
+          </div>
+          <i class="fas fa-arrow-right contact-arrow"></i>
+        </a>
+
+        <!-- GMAIL -->
+        <a href="mailto:thonpy745@gmail.com" class="contact-item">
+          <div class="contact-icon gmail"><i class="fas fa-envelope"></i></div>
+          <div class="contact-info">
+            <div class="contact-label">Gmail</div>
+            <div class="contact-value">thonpy745@gmail.com</div>
+          </div>
+          <i class="fas fa-arrow-right contact-arrow"></i>
+        </a>
+
+        <!-- WHATSAPP -->
+        <a href="https://wa.me/919647082552" target="_blank" rel="noopener" class="contact-item">
+          <div class="contact-icon whatsapp"><i class="fab fa-whatsapp"></i></div>
+          <div class="contact-info">
+            <div class="contact-label">WhatsApp</div>
+            <div class="contact-value">+91 9647082552</div>
+          </div>
+          <i class="fas fa-arrow-right contact-arrow"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="social-links">
+        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://wa.me/919647082552" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="mailto:thonpy745@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+      <div class="credit">
+        MAMUN <i class="fas fa-bolt"></i> 2025
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>
